@@ -5,9 +5,6 @@
   "main": "./lib/connect.js",
   "license": "MIT",
   "author": "FaizBastomi",
-  "engines": {
-    "node": "10.x"
-  },
   "scripts": {
     "start": "node ./lib/connect.js"
   },
