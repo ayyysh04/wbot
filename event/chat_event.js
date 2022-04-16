@@ -90,6 +90,8 @@ const checkLinkAndKick = async (sock, groupId = "", text = "", participant = "",
 
 module.exports = chatHandler = async (m, sock) => {
     try {
+        // console.log(JSON.stringify(m.messages[0]));//TODO:use this to get the info about json data comming in message
+
         if (m.type !== "notify") return;
         let msg = serialize(JSON.parse(JSON.stringify(m.messages[0])), sock);
         if (!msg.message) return;
