@@ -125,30 +125,30 @@ module.exports = chatHandler = async (m, sock) => {
         const cmd = djs.commands.get(cmdName) || djs.commands.find((cmd) => cmd.alias && cmd.alias.includes(cmdName));
         if (!cmd) return;
 
-        if (!cooldown.has(from)) {
-            cooldown.set(from, new djs.Collection());
-        }
-        const now = Date.now();
-        const timestamps = cooldown.get(from);
-        const cdAmount = (cmd.cooldown || 5) * 1000;
-        if (timestamps.has(from)) {
-            const expiration = timestamps.get(from) + cdAmount;
+        // if (!cooldown.has(from)) {
+        //     cooldown.set(from, new djs.Collection());
+        // }
+        // const now = Date.now();
+        // const timestamps = cooldown.get(from);
+        // const cdAmount = (cmd.cooldown || 5) * 1000;
+        // if (timestamps.has(from)) {
+        //     const expiration = timestamps.get(from) + cdAmount;
 
-            if (now < expiration) {
-                if (isGroup) {
-                    let timeLeft = (expiration - now) / 1000;
-                    printSpam(isGroup, sender, gcName);
-                    return await sock.sendMessage(from, { text: `This group is on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_` }, { quoted: msg })
-                }
-                else if (!isGroup) {
-                    let timeLeft = (expiration - now) / 1000;
-                    printSpam(isGroup, sender);
-                    return await sock.sendMessage(from, { text: `You are on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_` }, { quoted: msg })
-                }
-            }
-        }
-        timestamps.set(from, now);
-        setTimeout(() => timestamps.delete(from), cdAmount);
+        //     if (now < expiration) {
+        //         if (isGroup) {
+        //             let timeLeft = (expiration - now) / 1000;
+        //             printSpam(isGroup, sender, gcName);
+        //             return await sock.sendMessage(from, { text: `This group is on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_` }, { quoted: msg })
+        //         }
+        //         else if (!isGroup) {
+        //             let timeLeft = (expiration - now) / 1000;
+        //             printSpam(isGroup, sender);
+        //             return await sock.sendMessage(from, { text: `You are on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_` }, { quoted: msg })
+        //         }
+        //     }
+        // }
+        // timestamps.set(from, now);
+        // setTimeout(() => timestamps.delete(from), cdAmount);
 
         try {
             cmd.exec(msg, sock, args, arg);
