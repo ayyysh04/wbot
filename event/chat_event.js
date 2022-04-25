@@ -90,6 +90,7 @@ const checkLinkAndKick = async (sock, groupId = "", text = "", participant = "",
 
 module.exports = chatHandler = async (m, sock) => {
     try {
+
         // console.log(JSON.stringify(m.messages[0]));//TODO:use this to get the info about json data comming in message
 
         if (m.type !== "notify") return;
@@ -104,7 +105,7 @@ module.exports = chatHandler = async (m, sock) => {
         const gcName = isGroup ? gcMeta.subject : '';
 
         // no group invite
-        checkLinkAndKick(sock, from, body, sender, gcMeta);
+        // checkLinkAndKick(sock, from, body, sender, gcMeta);
         let temp_pref = multi_pref.test(body) ? body.split('').shift() : '!';
         if (body === 'prefix' || body === 'cekprefix') {
             msg.reply(`My prefix ${prefix}`);
@@ -123,7 +124,6 @@ module.exports = chatHandler = async (m, sock) => {
 
         const cmdName = body.slice(temp_pref.length).trim().split(/ +/).shift().toLowerCase();
         const cmd = djs.commands.get(cmdName) || djs.commands.find((cmd) => cmd.alias && cmd.alias.includes(cmdName));
-        if (!cmd) return;
 
         // if (!cooldown.has(from)) {
         //     cooldown.set(from, new djs.Collection());
@@ -149,13 +149,32 @@ module.exports = chatHandler = async (m, sock) => {
         // }
         // timestamps.set(from, now);
         // setTimeout(() => timestamps.delete(from), cdAmount);
-
-        try {
-            cmd.exec(msg, sock, args, arg);
-        } catch (e) {
-            console.error(e);
+        // if (!isCmd)
+        console.log(autoFolderLoc)
+        if (!cmd) {
+            if (autoFeature == true && (msg.type == "documentMessage" || msg.type == "videoMessage" || msg.type == "audioMessage" || msg.type == "imageMessage" || msg.type == "extendedTextMessage" || msg.type == "conversation")) {
+                autoCommand = djs.commands.get('autoUploadUtility') || djs.commands.find((cmd) => cmd.alias && cmd.alias.includes('autoUploadUtility'));
+                autoCommand.exec(msg, sock, args, arg);
+            }
         }
+        else {
+            try {
+                //for debugging
+                // console.debug(msg);
+                // console.debug("------------------");
+                // console.debug(arg);
+                // console.debug("------------------");
+                // console.debug(args);
+                cmd.exec(msg, sock, args, arg);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
     } catch (e) {
         console.log(color("[Err]", "red"), e.stack + "\nerror while handling chat event, might some message not answered");
     }
 }
+global.autoFeature = false;
+global.autoFolderLoc = null;
+global.autoFileName = null;

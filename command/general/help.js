@@ -33,8 +33,7 @@ module.exports = {
                     category[info.category].push(info);
                 }
             }
-            let str = '\t'.repeat(13) + "\`\`\`SMH BOT\`\`\`\n\n"
-                + `Hello, ${pushName === undefined ? sender.split("@")[0] : pushName}\n*Here My Command List*\n\n`;
+            let str = `Hello, ${pushName === undefined ? sender.split("@")[0] : pushName}\n*Here My Command List*\n\n`;
             const keys = Object.keys(category);
             for (const key of keys) {
                 str += `*${key.toUpperCase()}*\n~> \`\`\`${category[key]
@@ -43,10 +42,9 @@ module.exports = {
             str += `send ${prefix}help followed by a command name to get detail of command, e.g. ${prefix}help sticker`;
             await sock.sendMessage(msg.from, {
                 text: str,
-                footer: "Kaguya PublicBot • FaizBastomi",
+                footer: "Study Bot",
                 templateButtons: [
-                    { urlButton: { displayText: "Telegram Bot", url: "https://t.me/secondMidnight_bot" } },
-                    { urlButton: { displayText: "Source Code", url: "https://github.com/FaizBastomi/wbot/tree/multi-device" } }
+                    { urlButton: { displayText: "NSUT", url: "https://www.nsit.ac.in/" } }
                 ]
             }, { quoted: msg })
         }
