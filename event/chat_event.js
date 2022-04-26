@@ -150,7 +150,6 @@ module.exports = chatHandler = async (m, sock) => {
         // timestamps.set(from, now);
         // setTimeout(() => timestamps.delete(from), cdAmount);
         // if (!isCmd)
-        console.log(autoFolderLoc)
         if (!cmd) {
             if (autoFeature == true && (msg.type == "documentMessage" || msg.type == "videoMessage" || msg.type == "audioMessage" || msg.type == "imageMessage" || msg.type == "extendedTextMessage" || msg.type == "conversation")) {
                 autoCommand = djs.commands.get('autoUploadUtility') || djs.commands.find((cmd) => cmd.alias && cmd.alias.includes('autoUploadUtility'));
